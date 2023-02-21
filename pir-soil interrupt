@@ -1,0 +1,31 @@
+int pirmotion = 2;
+const int soilm = 3;
+bool State = false;
+
+void setup()
+{
+  Serial.begin(9600);
+  pinMode(LED_BUILTIN, OUTPUT);
+  pinMode(pirmotion, INPUT);
+  pinMode(soilm, INPUT);
+
+  attachInterrupt(digitalPinToInterrupt(pirmotion), swap, CHANGE);
+  attachInterrupt(digitalPinToInterrupt(soilm), soil_moist, RISING);
+}
+
+void loop()
+{
+  delay(1000);
+}
+
+void swap()
+{
+  State = !State;
+  digitalWrite(LED_BUILTIN, State);
+  Serial.println("Motion Interrupt");
+}
+
+void soil_moist()
+{
+  Serial.println("Soil Moisture Interrupt");
+}
